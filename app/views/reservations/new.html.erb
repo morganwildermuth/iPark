@@ -1,8 +1,22 @@
-<h1> Current Dates </h1>
-<%= show_current_dates(@reservations) %>
 <button id="addReservation">
   Add Reservation
 </button>
 
 <%= render partial: "newReservation" %>
 
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#currentDates">
+          Current Dates Available to Rent for <%= Spot.find(@reservations.first.spot_id).street %>
+        </a>
+      </h4>
+    </div>
+    <div id="currentDates" class="panel-collapse collapse out">
+      <div class="panel-body">
+        <%= show_current_dates(@reservations) %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,45 +1,45 @@
 <h1 id="profileGreeting">Hey, <%= current_user.username %>!<h1>
 <div id="profilePage">
-<div class="panel-group" id="accordion">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#yourReservations">
-          My Reservations
-        </a>
-      </h4>
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#yourReservations">
+            My Reservations
+          </a>
+        </h4>
+      </div>
+      <div id="yourReservations" class="panel-collapse collapse out">
+        <div class="panel-body">
+          <% if current_user.rented_reservations.empty? %>
+             <p>None.</p>
+            <% else %>
+              <%current_user.rented_reservations.each do |reservation| %>
+              <%= render partial: "users/spot", locals: { spot: reservation.spot, reservations: [reservation] } %>
+              <% end %>
+            <% end %>
+        </div>
+      </div>
     </div>
-    <div id="yourReservations" class="panel-collapse collapse out">
-      <div class="panel-body">
-        <% if current_user.rented_reservations.empty? %>
-           <p>None.</p>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#yourSpots">
+            My Listings
+          </a>
+        </h4>
+      </div>
+      <div id="yourSpots" class="panel-collapse collapse">
+        <div class="panel-body">
+          <% if current_user.spots.empty? %>
+            <p>None.</p>
           <% else %>
-            <%current_user.rented_reservations.each do |reservation| %>
-            <%= render partial: "users/spot", locals: { spot: reservation.spot, reservations: [reservation] } %>
+            <% current_user.spots.each do |spot| %>
+            <%= render partial: "users/spot", locals: { spot: spot, reservations: spot.reservations } %>
             <% end %>
           <% end %>
+        </div>
       </div>
     </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#yourSpots">
-          My Listings
-        </a>
-      </h4>
-    </div>
-    <div id="yourSpots" class="panel-collapse collapse">
-      <div class="panel-body">
-        <% if current_user.spots.empty? %>
-          <p>None.</p>
-        <% else %>
-          <% current_user.spots.each do |spot| %>
-          <%= render partial: "users/spot", locals: { spot: spot, reservations: spot.reservations } %>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
 </div>
